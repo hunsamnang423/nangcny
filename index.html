@@ -3,21 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HUN SAMNANG - CNY Dark Glass</title>
+    <title>HUN SAMNANG - CNY 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Moul&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         body {
             font-family: 'Kantumruy Pro', sans-serif;
-            background-color: #0a0a0a;
+            background-color: #050505;
             color: #ffffff;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Background Gradient & Glow */
+        /* Splash Screen Styles */
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, #2a0505 0%, #000000 100%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease-out, visibility 0.8s;
+            cursor: pointer;
+        }
+        
+        .cny-title {
+            font-family: 'Moul', cursive;
+            background: linear-gradient(to right, #fcd34d, #f59e0b, #fcd34d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+        }
+
+        .shake-animation {
+            animation: shake 2s infinite;
+        }
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* Background Effects */
         .bg-glow {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -25,235 +59,292 @@
             z-index: -2;
         }
         
-        /* Floating Orbs for Glass Effect */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
-            opacity: 0.6;
-        }
-        .orb-1 { top: 10%; left: -10%; width: 300px; height: 300px; background: #7f1d1d; }
-        .orb-2 { bottom: 10%; right: -10%; width: 250px; height: 250px; background: #b45309; }
-
-        /* Dark Glassmorphism */
         .glass {
-            background: rgba(20, 20, 20, 0.4);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.8);
         }
 
-        /* Gold Text Gradient */
         .text-gold {
-            background: linear-gradient(to right, #fcd34d, #f59e0b, #fcd34d);
+            background: linear-gradient(to bottom, #fcd34d, #d97706);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: bold;
+            font-weight: 800;
         }
 
-        /* Falling Angpao Animation */
+        .tab-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .tab-active {
+            background: rgba(252, 211, 77, 0.15);
+            color: #fcd34d;
+            border: 1px solid rgba(252, 211, 77, 0.3);
+            box-shadow: 0 0 15px rgba(252, 211, 77, 0.1);
+        }
+
+        .currency-toggle { display: none; }
+        .currency-btn.active { background: #fcd34d; color: black; font-weight: bold; }
+
+        .social-link {
+            width: 45px; height: 45px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .social-link:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-color: rgba(252, 211, 77, 0.3);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
         .angpao {
             position: fixed;
             top: -50px;
-            font-size: 20px;
+            font-size: 24px;
             z-index: 0;
             animation: fall linear forwards;
-            pointer-events: none; /* Click through */
+            pointer-events: none;
         }
 
         @keyframes fall {
             0% { transform: translateY(0) rotate(0deg); opacity: 1; }
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
-
-        /* Bank Tab Active State */
-        .tab-active {
-            background: rgba(252, 211, 77, 0.15);
-            border: 1px solid rgba(252, 211, 77, 0.5);
-            color: #fcd34d;
-            box-shadow: 0 0 15px rgba(252, 211, 77, 0.1);
-        }
-
-        /* Smooth Transition */
-        .fade-in {
-            animation: fadeIn 0.5s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
-    <!-- Background Elements -->
+    <!-- SPLASH SCREEN (ASKING FOR ANGPAO) -->
+    <div id="splash-screen" onclick="closeSplash()">
+        <!-- Big Angpao Icon -->
+        <div class="shake-animation mb-6 relative">
+            <div class="text-9xl filter drop-shadow-[0_0_30px_rgba(220,38,38,0.6)]">🧧</div>
+            <!-- Sparkles -->
+            <div class="absolute -top-4 -right-4 text-4xl animate-bounce">✨</div>
+            <div class="absolute -bottom-2 -left-4 text-3xl animate-pulse">💰</div>
+        </div>
+
+        <div class="text-center z-10 space-y-3 px-4">
+            <h1 class="cny-title text-2xl md:text-4xl font-bold leading-relaxed">ចូលឆ្នាំចិនហើយ!</h1>
+            <h2 class="text-3xl md:text-5xl font-bold text-white drop-shadow-lg">សុំអាំងប៉ាវមួយមក! 🥺</h2>
+            <p class="text-white/60 text-sm mt-4 animate-pulse">ជូនពរឆ្នាំថ្មី ហេង ហេង ទាំងអស់គ្នា</p>
+            
+            <div class="mt-8 px-6 py-2 border border-white/20 rounded-full bg-white/5 text-xs text-white/40 tracking-widest uppercase">
+                Tap anywhere to give
+            </div>
+        </div>
+    </div>
+
+    <!-- Background -->
     <div class="bg-glow"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    
-    <!-- Angpao Container (JS will inject here) -->
     <div id="angpao-container"></div>
 
-    <div class="w-full max-w-md relative z-10 space-y-5">
+    <!-- Main Card -->
+    <div id="main-content" class="w-full max-w-[380px] relative z-10 flex flex-col gap-5 transition-transform duration-1000 translate-y-10 opacity-0 filter blur-sm">
 
-        <!-- Profile Card -->
-        <div class="glass rounded-3xl p-8 text-center border-t border-white/10">
-            <div class="relative inline-block mb-4">
-                <div class="absolute inset-0 bg-gradient-to-tr from-red-600 to-yellow-500 rounded-full blur opacity-50"></div>
-                <img src="https://ui-avatars.com/api/?name=Sok+Dara&background=000&color=fcd34d&size=200" 
-                     class="relative w-24 h-24 rounded-full border-2 border-yellow-500/50 p-1 object-cover">
-                <div class="absolute -bottom-2 -right-2 bg-red-600 text-yellow-300 text-xs w-8 h-8 flex items-center justify-center rounded-full border-2 border-black">
-                    <i class="fa-solid fa-dragon"></i>
+        <!-- Profile Section -->
+        <div class="glass rounded-[2rem] p-6 text-center border-t border-white/10 relative overflow-hidden group">
+            <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-red-900/20 to-transparent"></div>
+            
+            <div class="relative inline-block mb-3">
+                <div class="absolute inset-0 bg-gradient-to-tr from-yellow-500 to-red-600 rounded-full blur-md opacity-40 animate-pulse"></div>
+                <img src="https://ui-avatars.com/api/?name=Hun+Samnang&background=1a1a1a&color=fcd34d&size=256&bold=true" 
+                     class="relative w-24 h-24 rounded-full border-2 border-yellow-500/30 p-1 object-cover shadow-xl">
+                <div class="absolute -bottom-1 -right-1 bg-gradient-to-r from-red-600 to-red-800 text-white text-[10px] px-2 py-0.5 rounded-full border border-black shadow-lg flex items-center gap-1">
+                    <i class="fa-solid fa-dragon text-yellow-300"></i> 2026
                 </div>
             </div>
             
-            <h1 class="text-2xl mt-2 tracking-wide text-gold">ហ៊ុន សំណាង</h1>
-            <p class="text-white/50 text-sm mt-1 font-light">Happy Chinese New Year 2026</p>
-
-            <!-- Social Icons -->
-            <div class="flex justify-center gap-4 mt-6">
-                <a href="#" class="w-10 h-10 rounded-full glass flex items-center justify-center text-white/70 hover:text-yellow-400 hover:bg-white/5 transition hover:scale-110">
-                    <i class="fa-brands fa-facebook-f"></i>
-                </a>
-                <a href="#" class="w-10 h-10 rounded-full glass flex items-center justify-center text-white/70 hover:text-yellow-400 hover:bg-white/5 transition hover:scale-110">
-                    <i class="fa-brands fa-telegram"></i>
-                </a>
-                <a href="#" class="w-10 h-10 rounded-full glass flex items-center justify-center text-white/70 hover:text-yellow-400 hover:bg-white/5 transition hover:scale-110">
-                    <i class="fa-brands fa-tiktok"></i>
-                </a>
-            </div>
+            <h1 class="text-3xl font-bold tracking-tight text-gold uppercase mt-2">HUN SAMNANG</h1>
+            <p class="text-white/40 text-xs font-light tracking-widest mt-1">សូមជូនពរឆ្នាំថ្មី ហេង ហេង!</p>
         </div>
 
-        <!-- Banking Glass Card -->
-        <div class="glass rounded-3xl p-1 overflow-hidden">
-            <!-- Custom Tabs -->
-            <div class="flex p-2 gap-2">
-                <button onclick="setBank('aba')" id="tab-aba" class="flex-1 py-3 rounded-xl text-sm font-bold transition-all text-white/40 hover:text-white tab-active">
-                    ABA
+        <!-- Banking Section -->
+        <div class="glass rounded-[2rem] p-2">
+            
+            <!-- Bank Tabs -->
+            <div class="grid grid-cols-2 gap-3 p-2 mb-2">
+                <button onclick="updateBank('aba')" id="tab-aba" class="tab-btn py-4 rounded-2xl text-sm font-bold border border-transparent text-white/50 hover:text-white tab-active">
+                    <i class="fa-solid fa-building-columns mr-1"></i> ABA
                 </button>
-                <button onclick="setBank('acleda')" id="tab-acleda" class="flex-1 py-3 rounded-xl text-sm font-bold transition-all text-white/40 hover:text-white">
-                    ACLEDA
-                </button>
-                <button onclick="setBank('wing')" id="tab-wing" class="flex-1 py-3 rounded-xl text-sm font-bold transition-all text-white/40 hover:text-white">
-                    WING
+                <button onclick="updateBank('wing')" id="tab-wing" class="tab-btn py-4 rounded-2xl text-sm font-bold border border-transparent text-white/50 hover:text-white">
+                    <i class="fa-solid fa-plane-departure mr-1"></i> WING
                 </button>
             </div>
 
-            <!-- Content -->
-            <div class="p-6 pt-2">
-                <div id="bank-content" class="fade-in text-center">
-                    <p class="text-yellow-500/60 text-[10px] uppercase tracking-[0.2em] mb-2">Account Number</p>
-                    <h2 id="acc-num" class="text-3xl font-mono font-bold text-white drop-shadow-lg mb-6">001 555 666</h2>
+            <!-- Display Area -->
+            <div class="bg-black/20 rounded-2xl p-6 text-center border border-white/5 relative overflow-hidden">
+                
+                <!-- Currency Switcher -->
+                <div id="currency-switcher" class="currency-toggle absolute top-4 right-4 flex bg-black/40 rounded-lg p-1 border border-white/10 z-20 backdrop-blur-md">
+                    <button onclick="switchCurrency('usd')" id="curr-usd" class="currency-btn active px-3 py-1 rounded text-[10px] text-white/60 transition-all">$ USD</button>
+                    <button onclick="switchCurrency('khr')" id="curr-khr" class="currency-btn px-3 py-1 rounded text-[10px] text-white/60 transition-all">៛ KHR</button>
+                </div>
 
-                    <!-- QR Frame -->
-                    <div class="relative inline-block group cursor-pointer">
-                        <div class="absolute inset-0 bg-gradient-to-br from-yellow-500 to-red-600 rounded-xl blur opacity-20 group-hover:opacity-40 transition"></div>
-                        <div class="relative bg-black/40 p-3 rounded-xl border border-white/10 backdrop-blur-sm">
-                            <img id="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=001555666&color=fcd34d&bgcolor=1a0505" class="w-40 h-40 rounded-lg">
-                            
-                            <!-- Small overlay icon -->
-                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                                <div class="bg-black/80 rounded-full p-3 backdrop-blur-md border border-yellow-500/50">
-                                    <i class="fa-solid fa-qrcode text-yellow-400 text-xl"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="mb-4 flex justify-center items-center gap-2 opacity-50">
+                    <span id="bank-label" class="text-xs uppercase tracking-widest font-bold">ABA BANK</span>
+                </div>
 
-                    <!-- Actions -->
-                    <div class="grid grid-cols-2 gap-3 mt-6">
-                        <button onclick="copyAcc()" class="glass hover:bg-white/10 text-white/80 py-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2">
-                            <i class="fa-regular fa-copy"></i> Copy
-                        </button>
-                        <a id="pay-link" href="#" target="_blank" class="bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-500 hover:to-yellow-400 text-black py-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(234,179,8,0.3)]">
-                            <i class="fa-solid fa-bolt"></i> Pay Now
-                        </a>
+                <div class="relative inline-block group mb-6">
+                    <div class="absolute -inset-1 bg-gradient-to-br from-yellow-500 via-red-500 to-yellow-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+                    <div class="relative bg-black p-3 rounded-xl border border-white/10">
+                        <img id="qr-image" src="" class="w-40 h-40 rounded-lg object-contain bg-white">
                     </div>
                 </div>
+
+                <div class="flex flex-col items-center justify-center gap-1">
+                    <p class="text-[10px] text-white/30 uppercase tracking-widest">Account Number</p>
+                    <div onclick="copyNumber()" class="cursor-pointer group relative py-2 px-4 rounded-lg hover:bg-white/5 transition-all w-full">
+                        <h2 id="acc-number" class="text-2xl font-mono font-bold text-white tracking-wider drop-shadow-md group-hover:text-yellow-400 transition">...</h2>
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                             <span class="bg-black/80 text-white text-[10px] px-2 py-1 rounded backdrop-blur">Copy</span>
+                        </div>
+                    </div>
+                    <p id="acc-name" class="text-yellow-500 text-sm font-semibold mt-1">HUN SAMNANG</p>
+                </div>
+            </div>
+
+            <div class="p-2 mt-2">
+                <a id="pay-btn" href="#" target="_blank" class="block w-full py-4 rounded-xl bg-gradient-to-r from-yellow-600 to-yellow-500 text-black font-bold text-sm text-center shadow-[0_0_20px_rgba(234,179,8,0.3)] hover:shadow-[0_0_30px_rgba(234,179,8,0.5)] hover:scale-[1.02] transition-all relative overflow-hidden group">
+                    <span class="relative z-10 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-bolt"></i> <span id="btn-text">Pay Now</span>
+                    </span>
+                    <div class="absolute inset-0 bg-white/30 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+                </a>
+            </div>
+
+            <div class="flex justify-center gap-4 py-4 mt-2 border-t border-white/5 mx-4">
+                <a href="https://www.facebook.com/samnanghunreal/" target="_blank" class="social-link"><i class="fa-brands fa-facebook-f text-lg"></i></a>
+                <a href="https://t.me/hunsamnang" target="_blank" class="social-link"><i class="fa-brands fa-telegram text-lg"></i></a>
+                <a href="https://wa.me/qr/H35HQISESRRLB1" target="_blank" class="social-link"><i class="fa-brands fa-whatsapp text-lg"></i></a>
+                <a href="https://u.wechat.com/kBVl6zaWxOSCqiHsDatJx7A?s=2" target="_blank" class="social-link"><i class="fa-brands fa-weixin text-lg"></i></a>
             </div>
         </div>
-
-        <p class="text-center text-white/20 text-xs mt-8">© 2026 HUN SAMNANG</p>
+        
+        <p class="text-center text-white/20 text-[10px]">© 2026 HUN SAMNANG</p>
     </div>
 
-    <!-- Notification -->
-    <div id="toast" class="fixed top-10 left-1/2 -translate-x-1/2 glass border border-yellow-500/30 text-yellow-400 px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 transform -translate-y-32 transition-all duration-300 z-50">
-        <i class="fa-solid fa-check-circle"></i>
-        <span class="font-bold text-sm">លេខគណនីបានចម្លង!</span>
+    <!-- Toast -->
+    <div id="toast" class="fixed top-10 left-1/2 -translate-x-1/2 glass border border-yellow-500/30 text-yellow-400 px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 opacity-0 pointer-events-none transition-all duration-300 transform -translate-y-4 z-50">
+        <i class="fa-solid fa-check-circle"></i> <span class="font-bold text-sm">លេខគណនីបានចម្លង!</span>
     </div>
 
     <script>
-        // --- Falling Angpao Logic ---
-        function createAngpao() {
-            const container = document.getElementById('angpao-container');
-            const angpao = document.createElement('div');
-            
-            // Random Icon: Angpao or Gold Coin or Lantern
-            const icons = ['🧧', '💰', '🏮'];
-            angpao.innerText = icons[Math.floor(Math.random() * icons.length)];
-            
-            angpao.classList.add('angpao');
-            
-            // Random Position & Speed
-            angpao.style.left = Math.random() * 100 + 'vw';
-            angpao.style.animationDuration = Math.random() * 3 + 4 + 's'; // 4s to 7s
-            angpao.style.opacity = Math.random();
-            angpao.style.fontSize = Math.random() * 15 + 15 + 'px'; // 15px to 30px
-            
-            container.appendChild(angpao);
-
-            // Remove after animation
-            setTimeout(() => {
-                angpao.remove();
-            }, 7000);
-        }
-
-        // Generate Angpao every 500ms
-        setInterval(createAngpao, 500);
-
-
-        // --- Banking Logic ---
+        // --- CONFIGURATION ---
         const banks = {
-            aba: { num: "040 220 0030", qr: "040220030", link: "https://pay.ababank.com/oRF8/bjr6yndk" },
-            wing: { num: "103 158 094", qr: "103158094", link: "https://wingmoney.app.link/FenLETPGC0b" }
+            aba: {
+                name: "HUN SAMNANG",
+                usd: { number: "040 220 0030", raw: "001220030" },
+                khr: { number: "000 111 222", raw: "000111222" }, // Update KHR here
+                link: "https://pay.ababank.com/oRF8/bjr6yndk"
+            },
+            wing: {
+                name: "HUN SAMNANG",
+                usd: { number: "103 158 094", raw: "103158094" },
+                khr: { number: "103 158 094", raw: "103158094" },
+                link: "https://wingmoney.app.link/FenLETPGC0b"
+            }
         };
-        acleda: { num: "soon!", qr: "soon!", link: "https://acledabank.com.kh" },
 
         let currentBank = 'aba';
+        let currentCurrency = 'usd';
 
-        function setBank(id) {
-            currentBank = id;
+        // --- SPLASH SCREEN LOGIC ---
+        function closeSplash() {
+            const splash = document.getElementById('splash-screen');
+            const main = document.getElementById('main-content');
             
-            // Update Tabs
-            document.querySelectorAll('button[id^="tab-"]').forEach(btn => {
-                btn.className = "flex-1 py-3 rounded-xl text-sm font-bold transition-all text-white/40 hover:text-white";
+            splash.style.opacity = '0';
+            splash.style.visibility = 'hidden';
+            
+            main.classList.remove('translate-y-10', 'opacity-0', 'blur-sm');
+        }
+
+        // Auto close after 3.5 seconds if not clicked
+        setTimeout(() => {
+            const splash = document.getElementById('splash-screen');
+            if(splash.style.opacity !== '0') closeSplash();
+        }, 3500);
+
+        function updateBank(bankKey) {
+            currentBank = bankKey;
+            
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('tab-active', 'text-white');
+                b.classList.add('text-white/50');
             });
-            document.getElementById(`tab-${id}`).className = "flex-1 py-3 rounded-xl text-sm font-bold transition-all text-white/40 hover:text-white tab-active";
-
-            // Update Content with animation reset
-            const content = document.getElementById('bank-content');
-            content.classList.remove('fade-in');
-            void content.offsetWidth; // Trigger reflow
-            content.classList.add('fade-in');
-
-            document.getElementById('acc-num').innerText = banks[id].num;
-            document.getElementById('pay-link').href = banks[id].link;
+            document.getElementById(`tab-${bankKey}`).classList.add('tab-active', 'text-white');
+            document.getElementById(`tab-${bankKey}`).classList.remove('text-white/50');
             
-            // Custom Colored QR: Gold on Dark Background
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${banks[id].qr}&color=fcd34d&bgcolor=1a0505&margin=2`;
-            document.getElementById('qr-img').src = qrUrl;
+            document.getElementById('bank-label').textContent = bankKey + " BANK";
+            document.getElementById('btn-text').textContent = "Pay with " + bankKey.toUpperCase();
+
+            const switcher = document.getElementById('currency-switcher');
+            if(bankKey === 'aba') {
+                switcher.style.display = 'flex';
+            } else {
+                switcher.style.display = 'none';
+                currentCurrency = 'usd';
+            }
+            renderData();
         }
 
-        function copyAcc() {
-            navigator.clipboard.writeText(banks[currentBank].num);
-            const toast = document.getElementById('toast');
-            toast.classList.remove('-translate-y-32');
-            setTimeout(() => toast.classList.add('-translate-y-32'), 2000);
+        function switchCurrency(curr) {
+            currentCurrency = curr;
+            document.querySelectorAll('.currency-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`curr-${curr}`).classList.add('active');
+            renderData();
         }
+
+        function renderData() {
+            const bankData = banks[currentBank];
+            const accData = bankData[currentCurrency];
+
+            document.getElementById('acc-name').textContent = bankData.name;
+            document.getElementById('acc-number').textContent = accData.number;
+            document.getElementById('pay-btn').href = bankData.link;
+
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${accData.raw}&margin=10&color=000&bgcolor=fff`;
+            document.getElementById('qr-image').src = qrUrl;
+        }
+
+        function copyNumber() {
+            const num = document.getElementById('acc-number').textContent;
+            navigator.clipboard.writeText(num).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.remove('opacity-0', '-translate-y-4', 'pointer-events-none');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none');
+                }, 2000);
+            });
+        }
+
+        window.onload = () => {
+            updateBank('aba');
+            
+            // Angpao Rain
+            setInterval(() => {
+                const container = document.getElementById('angpao-container');
+                const el = document.createElement('div');
+                el.classList.add('angpao');
+                el.innerText = ['🧧', '💰', '🏮', '✨'][Math.floor(Math.random() * 4)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                el.style.opacity = Math.random();
+                container.appendChild(el);
+                setTimeout(() => el.remove(), 6000);
+            }, 600);
+        };
     </script>
 </body>
 </html>
-
 
